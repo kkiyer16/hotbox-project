@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:tools="http://schemas.android.com/tools"
+      tools:showIn="navigation_view"
+      android:background="@color/white"
+>
+
+    <group android:checkableBehavior="single">
+
+        <item
+            android:id="@+id/home"
+            android:title="Home"
+            android:icon="@drawable/ic_home"
+        />
+        <item
+                android:id="@+id/search"
+                android:title="Search"
+                android:icon="@drawable/ic_search"
+        />
+        <item
+                android:id="@+id/foodmenu"
+                android:title="Food Menu"
+                android:icon="@drawable/ic_foodmenu"
+        />
+        <item
+                android:id="@+id/favourites"
+                android:title="Favourites"
+                android:icon="@drawable/ic_favourites"
+        />
+        <item
+                android:id="@+id/myorders"
+                android:title="My Orders"
+                android:icon="@drawable/ic_myorder"
+        />
+        <item
+                android:id="@+id/mycart"
+                android:title="My Cart"
+                android:icon="@drawable/ic_mycart"
+        />
+        <item
+                android:id="@+id/feedback"
+                android:title="@string/feedback"
+                android:icon="@drawable/ic_feedback"
+        />
+        <item
+                android:id="@+id/help"
+                android:title="Help"
+                android:icon="@drawable/ic_help"
+        />
+        <item
+                android:id="@+id/profile"
+                android:title="Profile"
+                android:icon="@drawable/ic_aboutus"
+        />
+        <item
+                android:id="@+id/login"
+                android:title="Log In"
+                android:icon="@drawable/ic_login"
+        />
+    </group>
+
+</menu>
