@@ -6,9 +6,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:background="@drawable/login_img"
-        android:backgroundTintMode="screen"
         android:padding="30dp"
+        android:background="@drawable/log_new1"
         android:gravity="bottom"
         tools:context=".SignUpActivity">
 
