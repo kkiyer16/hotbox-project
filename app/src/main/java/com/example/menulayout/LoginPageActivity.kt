@@ -49,7 +49,7 @@ class LoginPageActivity : AppCompatActivity() {
         db.signInWithEmailAndPassword(em, ps)
             .addOnCompleteListener {
                 if (it.isSuccessful) {
-                    //Log.d("Main", "Successfully Logged in User: ${it.result?.user?.uid}")
+                    Log.d("Main", "Successfully Logged in User: ${it.result?.user?.uid}")
                     Toast.makeText(this, "Welcome to HotBox!!", Toast.LENGTH_LONG).show()
                     startActivity(Intent(this, MainActivity::class.java))
                     finish()

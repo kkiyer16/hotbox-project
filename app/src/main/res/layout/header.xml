@@ -1,15 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--"#F1FA03"-->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:orientation="vertical"
               android:layout_width="match_parent"
-              android:layout_height="180dp"
-              android:background="@drawable/backimage"
+              android:layout_height="190dp"
+              android:background="@color/white"
               android:padding="16dp"
     >
 
     <ImageView
             android:layout_width="75dp"
-            android:layout_height="75dp"
+            android:layout_height="80dp"
             android:src="@drawable/hotbox_logo"
             android:layout_marginTop="20dp"
     />
@@ -18,7 +19,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="HOTBOX"
-            android:textColor="#F1FA03"
+            android:textColor="@color/black"
+            android:fontFamily="serif-monospace"
             android:textStyle="bold"
             android:textSize="20sp"
     />
@@ -26,10 +28,12 @@
     <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Hotty Dabba's"
-            android:textColor="@color/yellow"
+            android:text="serving To satisfy your taste buds"
+            android:textAllCaps="true"
+            android:textColor="@color/black"
+            android:fontFamily="serif-monospace"
             android:textStyle="bold"
-            android:textSize="18sp"
+            android:textSize="15sp"
     />
 
 </LinearLayout>

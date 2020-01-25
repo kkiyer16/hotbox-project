@@ -33,9 +33,9 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     lateinit var foodMenuFragment: FoodMenuFragment
     lateinit var favouritesFragment: FavouritesFragment
     lateinit var myOrdersFragment: MyOrdersFragment
-    lateinit var feedbackFragment: FeedbackFragment
+    //lateinit var feedbackFragment: FeedbackFragment
     lateinit var helpFragment: HelpFragment
-    lateinit var profileFragment: ProfileFragment
+//    lateinit var profileFragment: ProfileFragment
     lateinit var loginFragment: LoginFragment
     lateinit var notificationFragment: NotificationFragment
     lateinit var messageFragment: MessageFragment
@@ -171,12 +171,13 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                     .commit()
             }
             R.id.profile -> {
-                profileFragment = ProfileFragment()
-                supportFragmentManager
-                    .beginTransaction()
-                    .replace(R.id.frame_layout, profileFragment)
-                    .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
-                    .commit()
+//                profileFragment = ProfileFragment()
+//                supportFragmentManager
+//                    .beginTransaction()
+//                    .replace(R.id.frame_layout, profileFragment)
+//                    .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+//                    .commit()
+                startActivity(Intent(this,ProfileActivity::class.java))
             }
             /*R.id.login -> {
                 loginFragment = LoginFragment()

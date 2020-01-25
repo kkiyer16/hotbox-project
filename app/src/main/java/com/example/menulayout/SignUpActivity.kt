@@ -1,9 +1,8 @@
 package com.example.menulayout
 
-import android.annotation.SuppressLint
-import android.content.Intent
-import android.nfc.Tag
 //import android.support.v7.app.AppCompatActivity
+
+import android.content.Intent
 import android.os.Bundle
 import android.text.TextUtils
 import android.util.Log
@@ -11,18 +10,12 @@ import android.view.View
 import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import com.facebook.CallbackManager
-import com.facebook.FacebookCallback
-import com.facebook.FacebookException
-import com.facebook.login.LoginManager
-import com.facebook.login.LoginResult
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.FirebaseFirestore
-import kotlinx.android.synthetic.main.activity_login.*
+import com.google.firebase.firestore.SetOptions
 import kotlinx.android.synthetic.main.activity_sign_up.*
-import java.util.*
-import kotlin.collections.HashMap
+
 
 private const val TAG = "MyActivity"
 
@@ -39,8 +32,6 @@ class SignUpActivity : AppCompatActivity() {
         authen = FirebaseAuth.getInstance()
 
         fstore = FirebaseFirestore.getInstance()
-
-        //db = FirebaseFirestore.getInstance()//.document("HotBox Users/Users")
 
         signupbtn.setOnClickListener {
             //startActivity(Intent(this, MainActivity::class.java))
@@ -91,19 +82,18 @@ class SignUpActivity : AppCompatActivity() {
         authen.createUserWithEmailAndPassword(em, ps)
             .addOnCompleteListener(this) {
                 if(it.isSuccessful){
-                    //Toast.makeText(this, "Registered Successfully to HotBox!!", Toast.LENGTH_LONG).show()
                     val usernew = HashMap<String, Any>()
-                    //usernew["FullName"] = fn
+                    usernew["FullName"] = fn
                     usernew["UserName"] = un
                     usernew["Email_ID"] = em
                     usernew["Password"] = ps
-                    docRef = fstore.collection("HotBox Users").document("Users").collection(fn)
-                        .document("Personal Details")
-                    docRef.set(usernew)
+                    docRef = fstore.collection("HotBox Users").document(FirebaseAuth.getInstance().uid.toString())
+                    docRef.set(usernew, SetOptions.merge())
                         .addOnSuccessListener {
                             Toast.makeText(this, "Registered Successfully to HotBox!!", Toast.LENGTH_LONG).show()
-                            startActivity(Intent(this, LoginPageActivity::class.java))
-                            finish()
+                            Toast.makeText(this, "Welcome to HotBox!!", Toast.LENGTH_LONG).show()
+                            Log.d(TAG, "UID:${FirebaseAuth.getInstance().uid}")
+                            startActivity(Intent(this, MainActivity::class.java))
                         }
                         .addOnFailureListener {
                             Log.w(TAG, "Error Adding document")
