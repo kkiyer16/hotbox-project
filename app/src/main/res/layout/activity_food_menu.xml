@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    <RelativeLayout xmlns:app="http://schemas.android.com/apk/res-auto"
+            xmlns:tools="http://schemas.android.com/tools"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:context=".FoodMenuActivity">
+
+        <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:padding="5dp">
+
+            <RelativeLayout
+                    android:id="@+id/food_rel_lay1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="3dp"
+                    android:paddingRight="3dp">
+
+                <ImageView
+                        android:id="@+id/ig_breakfast"
+                        android:layout_width="match_parent"
+                        android:layout_height="200dp"
+                        android:background="@drawable/breakfast" />
+
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:fontFamily="sans-serif-condensed"
+                        android:text="Breakfast"
+                        android:textColor="@color/flame_yellow"
+                        android:textSize="40sp"
+                        android:textStyle="bold" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                    android:id="@+id/food_rel_lay2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/food_rel_lay1"
+                    android:paddingLeft="3dp"
+                    android:paddingRight="3dp" >
+
+                <ImageView
+                        android:id="@+id/ig_veg_lunch"
+                        android:layout_width="match_parent"
+                        android:layout_height="200dp"
+                        android:layout_marginTop="10dp"
+                        android:background="@drawable/veglunch" />
+
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:fontFamily="sans-serif-condensed"
+                        android:text="Veg Lunch"
+                        android:textColor="@color/yellow"
+                        android:textSize="40sp"
+                        android:textStyle="bold" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                    android:id="@+id/food_rel_lay3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/food_rel_lay2"
+                    android:paddingLeft="3dp"
+                    android:paddingRight="3dp" >
+
+                <ImageView
+                        android:id="@+id/ig_non_veg_lunch"
+                        android:layout_width="match_parent"
+                        android:layout_height="200dp"
+                        android:layout_marginTop="10dp"
+                        android:background="@drawable/nonveglunch" />
+
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:fontFamily="sans-serif-condensed"
+                        android:text="Non-Veg Lunch"
+                        android:textColor="@color/flame_yellow"
+                        android:textSize="40sp"
+                        android:textStyle="bold" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                    android:id="@+id/food_rel_lay4"
+                    android:layout_below="@+id/food_rel_lay3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="3dp"
+                    android:paddingRight="3dp" >
+
+                <ImageView
+                        android:id="@+id/ig_snack"
+                        android:layout_width="match_parent"
+                        android:layout_height="200dp"
+                        android:layout_marginTop="10dp"
+                        android:background="@drawable/snacks" />
+
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="sans-serif-condensed"
+                        android:layout_centerInParent="true"
+                        android:text="Snacks"
+                        android:textAllCaps="false"
+                        android:textColor="@color/yellow"
+                        android:textSize="40sp"
+                        android:textStyle="bold" />
+
+            </RelativeLayout>
+
+        </RelativeLayout>
+
+    </RelativeLayout>
+
+</ScrollView>
