@@ -86,8 +86,9 @@ class SignUpActivity : AppCompatActivity() {
                     usernew["FullName"] = fn
                     usernew["UserName"] = un
                     usernew["Email_ID"] = em
-                    usernew["Password"] = ps
-                    docRef = fstore.collection("HotBox Users").document(FirebaseAuth.getInstance().uid.toString())
+//                    usernew["Password"] = ps
+                    docRef = fstore.collection("HotBox").document(FirebaseAuth.getInstance().uid.toString())
+                        .collection("Users").document("Personal Details")
                     docRef.set(usernew, SetOptions.merge())
                         .addOnSuccessListener {
                             Toast.makeText(this, "Registered Successfully to HotBox!!", Toast.LENGTH_LONG).show()

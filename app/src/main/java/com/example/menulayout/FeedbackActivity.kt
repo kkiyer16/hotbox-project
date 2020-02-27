@@ -29,6 +29,7 @@ class FeedbackActivity : AppCompatActivity() {
 
         actionBar.setDisplayHomeAsUpEnabled(true)
         actionBar.setDisplayHomeAsUpEnabled(true)
+
     }
 
     override fun onSupportNavigateUp(): Boolean {

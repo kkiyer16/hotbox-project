@@ -14,11 +14,29 @@
             android:roundIcon="@mipmap/ic_launcher_round"
             android:supportsRtl="true"
             android:theme="@style/AppTheme">
-        <activity android:name=".ProfileActivity"></activity>
+        <activity android:name=".BreakfastActivity"/>
+        <activity android:name=".AdminFoodMenuActivity" />
+        <activity android:name=".AdminAccountActivity" />
+        <activity android:name=".AdminEditProfileActivity" />
+        <activity
+                android:name=".AdminMainActivity"
+                android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+                android:name=".AdminLoginActivity"
+                android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+        <activity android:name=".FoodMenuActivity" />
+        <activity
+                android:name=".ForgotPasswordActivity"
+                android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+        <activity android:name=".MyAddressActivity" />
+        <activity android:name=".ProfMyAddressActivity" />
+        <activity android:name=".ProfChangePwd" />
+        <activity android:name=".ProfMyProfileActivity" />
+        <activity android:name=".ProfileActivity" />
         <activity
                 android:name=".LoginPageActivity"
-                android:theme="@style/Theme.AppCompat.Light.NoActionBar"></activity>
-        <activity android:name=".FeedbackActivity"></activity>
+                android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+        <activity android:name=".FeedbackActivity" />
         <activity
                 android:name=".SplashActivity"
                 android:theme="@style/Theme.AppCompat.Light.NoActionBar">
@@ -30,10 +48,13 @@
         </activity>
         <activity
                 android:name=".SignUpActivity"
-                android:theme="@style/Theme.AppCompat.Light.NoActionBar"></activity>
+                android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
         <activity
                 android:name=".MainActivity"
                 android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+                android:name="com.theartofdev.edmodo.cropper.CropImageActivity"
+                android:theme="@style/Base.Theme.AppCompat" />
     </application>
 
 </manifest>

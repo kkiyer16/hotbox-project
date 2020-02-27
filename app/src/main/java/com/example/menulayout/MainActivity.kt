@@ -30,13 +30,9 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     lateinit var homeFragment: HomeFragment
     lateinit var searchFragment: SearchFragment
-    lateinit var foodMenuFragment: FoodMenuFragment
     lateinit var favouritesFragment: FavouritesFragment
     lateinit var myOrdersFragment: MyOrdersFragment
-    //lateinit var feedbackFragment: FeedbackFragment
     lateinit var helpFragment: HelpFragment
-//    lateinit var profileFragment: ProfileFragment
-    lateinit var loginFragment: LoginFragment
     lateinit var notificationFragment: NotificationFragment
     lateinit var messageFragment: MessageFragment
     lateinit var myCartFragment: MyCartFragment
@@ -111,7 +107,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 //    @RequiresApi(Build.VERSION_CODES.JELLY_BEAN)
     override fun onNavigationItemSelected(menuItem: MenuItem): Boolean {
         when(menuItem.itemId){
-            /*R.id.home -> {
+            R.id.home -> {
                 homeFragment = HomeFragment()
                 supportFragmentManager
                     .beginTransaction()
@@ -119,7 +115,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                     .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
                     .commit()
             }
-            R.id.search ->{
+            /*R.id.search ->{
                 searchFragment = SearchFragment()
                 supportFragmentManager
                     .beginTransaction()
@@ -128,12 +124,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                     .commit()
             }*/
             R.id.foodmenu -> {
-               foodMenuFragment = FoodMenuFragment()
-                supportFragmentManager
-                    .beginTransaction()
-                    .replace(R.id.frame_layout, foodMenuFragment)
-                    .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
-                    .commit()
+                startActivity(Intent(this, FoodMenuActivity::class.java))
             }
             R.id.favourites -> {
                 favouritesFragment = FavouritesFragment()
@@ -171,22 +162,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                     .commit()
             }
             R.id.profile -> {
-//                profileFragment = ProfileFragment()
-//                supportFragmentManager
-//                    .beginTransaction()
-//                    .replace(R.id.frame_layout, profileFragment)
-//                    .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
-//                    .commit()
                 startActivity(Intent(this,ProfileActivity::class.java))
             }
-            /*R.id.login -> {
-                loginFragment = LoginFragment()
-                supportFragmentManager
-                    .beginTransaction()
-                    .replace(R.id.frame_layout, loginFragment)
-                    .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
-                    .commit()
-            }*/
         }
 
         drawer_layout.closeDrawer(GravityCompat.START)

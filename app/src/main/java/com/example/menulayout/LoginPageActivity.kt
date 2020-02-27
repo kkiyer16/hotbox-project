@@ -1,6 +1,7 @@
 package com.example.menulayout
 
 import android.content.Intent
+import android.content.SharedPreferences
 //import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -20,12 +21,14 @@ import java.util.*
 
 class LoginPageActivity : AppCompatActivity() {
 
-    lateinit var db : FirebaseAuth
+    lateinit var db: FirebaseAuth
+    lateinit var sh: SharedPreferences
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
 
+        sh = getSharedPreferences("com.example.menulayout", 0)
         db = FirebaseAuth.getInstance()
 
         signinbtn.setOnClickListener {
@@ -36,14 +39,22 @@ class LoginPageActivity : AppCompatActivity() {
         signup.setOnClickListener {
             startActivity(Intent(this, SignUpActivity::class.java))
         }
+
+        forgot_password.setOnClickListener {
+            startActivity(Intent(this, ForgotPasswordActivity::class.java))
+        }
+
+        redirect_to_admin_login_page.setOnClickListener {
+            startActivity(Intent(this, AdminLoginActivity::class.java))
+        }
     }
 
-    private fun signIn(){
+    private fun signIn() {
         val em = emaillog.text.toString()
         val ps = passlog.text.toString()
 
-        if(em.isEmpty() || ps.isEmpty()){
-            Toast.makeText(this, "Please Enter the Required Credentials ", Toast.LENGTH_LONG ).show()
+        if (em.isEmpty() || ps.isEmpty()) {
+            Toast.makeText(this, "Please Enter the Required Credentials ", Toast.LENGTH_LONG).show()
             return
         }
         db.signInWithEmailAndPassword(em, ps)
@@ -54,8 +65,7 @@ class LoginPageActivity : AppCompatActivity() {
                     startActivity(Intent(this, MainActivity::class.java))
                     finish()
                     return@addOnCompleteListener
-                }
-                else {
+                } else {
                     Toast.makeText(this, "Failed to Login", Toast.LENGTH_LONG).show()
                 }
             }
@@ -68,9 +78,19 @@ class LoginPageActivity : AppCompatActivity() {
     override fun onStart() {
         super.onStart()
 
-        if(FirebaseAuth.getInstance().currentUser != null){
-            finish()
-            startActivity(Intent(this, MainActivity::class.java))
+        sh = getSharedPreferences("com.example.menulayout", 0)
+
+        if (FirebaseAuth.getInstance().currentUser != null) {
+            //checking if a user is admin or not
+            //getBoolean(key,defaultvalue) defaultvalue indicates if a key does not exits than the default value
+            //will be return
+            if (sh.getBoolean("isadmin", false)) {
+                startActivity(Intent(this, AdminMainActivity::class.java))
+                finish()
+            } else {
+                startActivity(Intent(this, MainActivity::class.java))
+                finish()
+            }
         }
     }
 }
