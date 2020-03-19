@@ -1,6 +1,5 @@
 package com.example.menulayout
 
-//import android.annotation.TargetApi
 import android.content.Intent
 import android.os.Build
 //import android.support.v7.app.AppCompatActivity
@@ -30,13 +29,9 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     lateinit var homeFragment: HomeFragment
     lateinit var searchFragment: SearchFragment
-    lateinit var favouritesFragment: FavouritesFragment
-    lateinit var myOrdersFragment: MyOrdersFragment
     lateinit var helpFragment: HelpFragment
     lateinit var notificationFragment: NotificationFragment
     lateinit var messageFragment: MessageFragment
-    lateinit var myCartFragment: MyCartFragment
-
     lateinit var authen : FirebaseAuth
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -103,8 +98,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         }
     }
 
-//    @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
-//    @RequiresApi(Build.VERSION_CODES.JELLY_BEAN)
     override fun onNavigationItemSelected(menuItem: MenuItem): Boolean {
         when(menuItem.itemId){
             R.id.home -> {
@@ -115,40 +108,17 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                     .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
                     .commit()
             }
-            /*R.id.search ->{
-                searchFragment = SearchFragment()
-                supportFragmentManager
-                    .beginTransaction()
-                    .replace(R.id.frame_layout, searchFragment)
-                    .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
-                    .commit()
-            }*/
             R.id.foodmenu -> {
                 startActivity(Intent(this, FoodMenuActivity::class.java))
             }
             R.id.favourites -> {
-                favouritesFragment = FavouritesFragment()
-                supportFragmentManager
-                    .beginTransaction()
-                    .replace(R.id.frame_layout, favouritesFragment)
-                    .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
-                    .commit()
+                startActivity(Intent(this,FavoritesActivity::class.java))
             }
             R.id.myorders -> {
-                myOrdersFragment = MyOrdersFragment()
-                supportFragmentManager
-                    .beginTransaction()
-                    .replace(R.id.frame_layout, myOrdersFragment)
-                    .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
-                    .commit()
+                startActivity(Intent(this,MyOrdersActivity::class.java))
             }
             R.id.mycart -> {
-                myCartFragment = MyCartFragment()
-                supportFragmentManager
-                    .beginTransaction()
-                    .replace(R.id.frame_layout, myCartFragment)
-                    .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
-                    .commit()
+                startActivity(Intent(this,MyCartActivity::class.java))
             }
             R.id.feedback -> {
                 startActivity(Intent(this,FeedbackActivity::class.java))
@@ -159,6 +129,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                     .beginTransaction()
                     .replace(R.id.frame_layout, helpFragment)
                     .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+                    .addToBackStack(null)
                     .commit()
             }
             R.id.profile -> {
@@ -198,12 +169,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
 
         when(item?.itemId){
-//            R.id.log_out_main-> {
-//                FirebaseAuth.getInstance().signOut()
-//                makeText(this, "Logged Out!!", LENGTH_LONG).show()
-//                startActivity(Intent(this, LoginPageActivity::class.java))
-//                finish()
-//            }
             R.id.log_out_main->{
                 AlertDialog.Builder(this).apply {
                     setTitle("Are you Sure?")
@@ -220,7 +185,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     }
 
     private fun LogOut(){
-//        makeText(this, "Logged Out!!", LENGTH_LONG).show()
         Toast.makeText(this, "Logged Out!", Toast.LENGTH_LONG).show()
         startActivity(Intent(this, LoginPageActivity::class.java))
         finish()

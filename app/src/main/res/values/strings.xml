@@ -17,8 +17,15 @@
         <item>Select Food Category</item>
         <item>Breakfast</item>
         <item>Veg Lunch</item>
-        <item>Non-Veg Lunch</item>
+        <item>NonVeg Lunch</item>
         <item>Snacks</item>
-        <item>Beverages</item>
+    </string-array>
+
+    <string-array name="subs_categories">
+        <item>Select Subscription</item>
+        <item>Only Today</item>
+        <item>Weekly</item>
+        <item>Monthly</item>
+        <item>Quaterly</item>
     </string-array>
 </resources>

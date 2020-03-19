@@ -1,5 +1,6 @@
 package com.example.menulayout
 
+import android.app.Activity
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -19,10 +20,19 @@ class MyAddressActivity : AppCompatActivity() {
     lateinit var addressList: ArrayList<ModelAddress>
     lateinit var addressAdapter: AddressAdapter
     private val mArratList: ArrayList<ModelAddress> = ArrayList()
+    private var from_other="self"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_my_address)
+
+        try {
+            if (intent.extras!!.containsKey("other_activity")) {
+                from_other = intent.extras!!.getString("other_activity")!!.toString()
+            }
+        }catch (e: Exception){
+            Log.d("ex", e.message.toString())
+        }
 
         val actionBar = supportActionBar
         actionBar!!.title = "My Address"
@@ -31,9 +41,21 @@ class MyAddressActivity : AppCompatActivity() {
         actionBar.setDisplayHomeAsUpEnabled(true)
 
         add_new_address.setOnClickListener {
-            startActivity(Intent(this, ProfMyAddressActivity::class.java))
+            startActivityForResult(Intent(this, ProfMyAddressActivity::class.java),1234)
         }
 
+        reqNewData()
+        recylerView = findViewById(R.id.recyler_view_address)
+        recylerView.setHasFixedSize(true)
+        val layoutManager = LinearLayoutManager(this)
+        recylerView.layoutManager = layoutManager
+        addressAdapter = AddressAdapter(applicationContext, mArratList, from_other,this)
+        recylerView.adapter = addressAdapter
+
+    }
+
+    private fun reqNewData(){
+        mArratList.clear()
         val retData = fStore.collection("HotBox").document(userid)
             .collection("Users Address")
         retData.get()
@@ -64,14 +86,17 @@ class MyAddressActivity : AppCompatActivity() {
                 }
                 addressAdapter.update(mArratList)
             }
+    }
 
-        recylerView = findViewById(R.id.recyler_view_address)
-        recylerView.setHasFixedSize(true)
-        val layoutManager = LinearLayoutManager(this)
-        recylerView.layoutManager = layoutManager
-        addressAdapter = AddressAdapter(applicationContext, mArratList)
-        recylerView.adapter = addressAdapter
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if(requestCode==1234) {
+            if (resultCode == Activity.RESULT_OK) {
+                Log.d("data", "data")
+                reqNewData()
 
+            }
+        }
     }
 
     override fun onSupportNavigateUp(): Boolean {

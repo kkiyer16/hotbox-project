@@ -14,16 +14,19 @@
             android:roundIcon="@mipmap/ic_launcher_round"
             android:supportsRtl="true"
             android:theme="@style/AppTheme">
-        <activity android:name=".BreakfastActivity"/>
-        <activity android:name=".AdminFoodMenuActivity" />
-        <activity android:name=".AdminAccountActivity" />
-        <activity android:name=".AdminEditProfileActivity" />
+
+        <activity android:name=".MyOrdersActivity" />
+        <activity android:name=".CheckOutActivity" />
+        <activity android:name=".FavoritesActivity" />
         <activity
-                android:name=".AdminMainActivity"
+                android:name=".MyCartActivity"
                 android:theme="@style/AppTheme.NoActionBar" />
-        <activity
-                android:name=".AdminLoginActivity"
-                android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+        <activity android:name=".ProductDetailsActivity" />
+        <activity android:name=".HomeFoodActivity" />
+        <activity android:name=".SnacksActivity" />
+        <activity android:name=".NonVegActivity" />
+        <activity android:name=".VegLunchActivity" />
+        <activity android:name=".BreakfastActivity" />
         <activity android:name=".FoodMenuActivity" />
         <activity
                 android:name=".ForgotPasswordActivity"

@@ -1,5 +1,7 @@
 package com.example.menulayout
 
+import java.io.Serializable
+
 class ModelAddress(
     var name: String,
     var buildno: String,
@@ -11,6 +13,7 @@ class ModelAddress(
     var mobileno: String,
     var altmob:String,
     var addresstype:String
-) {
+): Serializable
+{
     //class def
 }

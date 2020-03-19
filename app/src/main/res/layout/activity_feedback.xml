@@ -1,21 +1,135 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        android:background="@color/white"
-        tools:context=".FeedbackActivity">
+        android:layout_height="match_parent">
 
-    <TextView
+    <RelativeLayout xmlns:app="http://schemas.android.com/apk/res-auto"
+            xmlns:tools="http://schemas.android.com/tools"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Provide Feedback Page"
-            android:textStyle="bold"
-            android:textSize="30sp"
-            android:textColor="@color/black"
-            android:gravity="center"
-            android:layout_centerInParent="true"/>
+            android:background="@color/white"
+            android:padding="15dp"
+            tools:context=".FeedbackActivity">
 
+        <LinearLayout
+                android:id="@+id/feedback_linear_layout_1"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
 
-</RelativeLayout>
+            <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/rectangle_edittext"
+                    android:focusable="true"
+                    android:focusableInTouchMode="true"
+                    android:textColorHint="#A3A3A3">
+
+                <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/feedback_user_name"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Name*"
+                        android:inputType="textPersonName"
+                        android:paddingLeft="10dp"
+                        android:textColor="@color/black"
+                        android:textSize="20sp" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:background="@drawable/rectangle_edittext"
+                    android:focusable="true"
+                    android:focusableInTouchMode="true"
+                    android:textColorHint="#A3A3A3">
+
+                <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/feedback_email_id"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Email ID*"
+                        android:inputType="textEmailAddress"
+                        android:paddingLeft="10dp"
+                        android:textColor="@color/black"
+                        android:textSize="20sp" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:background="@drawable/rectangle_edittext"
+                    android:focusable="true"
+                    android:focusableInTouchMode="true"
+                    android:textColorHint="#A3A3A3">
+
+                <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/feedback_message"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:autoLink="all"
+                        android:hint="Message*"
+                        android:inputType="textMultiLine|textCapSentences"
+                        android:lines="5"
+                        android:maxLines="5"
+                        android:minLines="1"
+                        android:paddingLeft="10dp"
+                        android:scrollbars="vertical"
+                        android:textColor="@color/black"
+                        android:textSize="20sp" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginBottom="10dp"
+                    android:fontFamily="serif-monospace"
+                    android:paddingLeft="10dp"
+                    android:text="Provide Ratings for our App"
+                    android:textColor="@color/black"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+            <RatingBar
+                    android:id="@+id/feedback_rating"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:numStars="5"
+                    android:stepSize="0.5" />
+
+            <ProgressBar
+                    android:id="@+id/feedback_progress_bar"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:visibility="invisible" />
+
+        </LinearLayout>
+
+        <Button
+                android:id="@+id/feedback_submit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/feedback_linear_layout_1"
+                android:layout_marginTop="25dp"
+                android:layout_marginBottom="10dp"
+                android:background="@drawable/rounded_button"
+                android:fontFamily="serif-monospace"
+                android:gravity="center_horizontal"
+                android:padding="10dp"
+                android:text="Submit"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                android:textSize="25dp"
+                android:textStyle="bold" />
+
+    </RelativeLayout>
+
+</ScrollView>

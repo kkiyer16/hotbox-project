@@ -43,10 +43,6 @@ class LoginPageActivity : AppCompatActivity() {
         forgot_password.setOnClickListener {
             startActivity(Intent(this, ForgotPasswordActivity::class.java))
         }
-
-        redirect_to_admin_login_page.setOnClickListener {
-            startActivity(Intent(this, AdminLoginActivity::class.java))
-        }
     }
 
     private fun signIn() {
@@ -85,8 +81,8 @@ class LoginPageActivity : AppCompatActivity() {
             //getBoolean(key,defaultvalue) defaultvalue indicates if a key does not exits than the default value
             //will be return
             if (sh.getBoolean("isadmin", false)) {
-                startActivity(Intent(this, AdminMainActivity::class.java))
-                finish()
+//                startActivity(Intent(this, AdminMainActivity::class.java))
+//                finish()
             } else {
                 startActivity(Intent(this, MainActivity::class.java))
                 finish()

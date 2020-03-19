@@ -1,21 +1,29 @@
 package com.example.menulayout
 
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
+import android.util.Log
 //import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.LinearLayout
-import android.widget.Toast
-import android.widget.Toolbar
+import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
+import androidx.cardview.widget.CardView
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentTransaction
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager.widget.ViewPager
+import com.bumptech.glide.Glide
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.android.synthetic.main.fragment_home.*
+import kotlinx.android.synthetic.main.home_frag_scroll_layout.*
+import java.io.Serializable
 import java.util.*
 
 @Suppress("SENSELESS_COMPARISON")
@@ -31,17 +39,48 @@ class HomeFragment : Fragment() {
     private val DELAY_MS : Long = 1500
     private val PERIOD_MS : Long = 1500
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_home, container, false)
+        val retv = inflater.inflate(R.layout.fragment_home, container, false)
 
+        return retv
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        val inc_lay = view.findViewById<View>(R.id.include_lay_home)
+        val inc_card_home = inc_lay.findViewById<CardView>(R.id.card_order_food_from_home)
+        val inc_card_catering = inc_lay.findViewById<CardView>(R.id.card_order_food_from_catering)
+        val dis_card1 = inc_lay.findViewById<CardView>(R.id.display_card_1)
+        val dis_card2 = inc_lay.findViewById<CardView>(R.id.display_card_2)
+        val dis_card3 = inc_lay.findViewById<CardView>(R.id.display_card_3)
+
+        inc_card_home.setOnClickListener {
+            startActivity(Intent(activity, HomeFoodActivity::class.java))
+        }
+
+        inc_card_catering.setOnClickListener {
+            startActivity(Intent(activity, FoodMenuActivity::class.java))
+        }
+
+        Glide.with(context!!).load(R.drawable.roti_sabji).centerCrop().dontAnimate().into(hf_image_view_1)
+
+        Glide.with(context!!).load(R.drawable.chicken_masala).centerCrop().dontAnimate().into(hf_image_view_2)
+
+        Glide.with(context!!).load(R.drawable.samosa).centerCrop().dontAnimate().into(hf_image_view_3)
+
+        dis_card1.setOnClickListener {
+            startActivity(Intent(activity, VegLunchActivity::class.java))
+        }
+
+        dis_card2.setOnClickListener {
+            startActivity(Intent(activity, NonVegActivity::class.java))
+        }
+
+        dis_card3.setOnClickListener {
+            startActivity(Intent(activity, SnacksActivity::class.java))
+        }
 
         mPager = view.findViewById(R.id.view_pager) as ViewPager
         adapter = PageView(context!!, path)
@@ -64,7 +103,6 @@ class HomeFragment : Fragment() {
 
                 }
             }
-
         })
     }
 
@@ -105,7 +143,5 @@ class HomeFragment : Fragment() {
             dots_layout.addView(dots[i], params)
 
         }
-
     }
-
 }

@@ -16,7 +16,6 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.SetOptions
 import kotlinx.android.synthetic.main.activity_sign_up.*
 
-
 private const val TAG = "MyActivity"
 
 class SignUpActivity : AppCompatActivity() {

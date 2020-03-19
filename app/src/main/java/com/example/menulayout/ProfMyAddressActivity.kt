@@ -1,5 +1,6 @@
 package com.example.menulayout
 
+import android.app.Activity
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -87,7 +88,7 @@ class ProfMyAddressActivity : AppCompatActivity() {
             || mno.isEmpty()){
             Toast.makeText(this, "Enter Required Credentials", Toast.LENGTH_LONG).show()
         }
-        else {//tike karde changes //keys hamesha small cakse me likhne ka
+        else {
             try {
                 val userData = HashMap<String, Any>()
                 userData["buildno"] = hno
@@ -110,7 +111,8 @@ class ProfMyAddressActivity : AppCompatActivity() {
                 ref.set(userData, SetOptions.merge())
                     .addOnSuccessListener {
                         Toast.makeText(this, "Address Added Successfully", Toast.LENGTH_LONG).show()
-                        startActivity(Intent(this, MyAddressActivity::class.java))
+//                        startActivity(Intent(this, MyAddressActivity::class.java))
+                        setResult(Activity.RESULT_OK,Intent())
                         finish()
                     }
                     .addOnFailureListener { e ->

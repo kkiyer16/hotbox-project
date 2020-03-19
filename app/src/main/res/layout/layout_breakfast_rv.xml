@@ -8,6 +8,7 @@
         app:cardElevation="10dp">
 
     <RelativeLayout
+            android:id="@+id/parent_rel_lay"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
@@ -37,7 +38,6 @@
                         android:id="@+id/txt_food_name_inside_rv"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:fontFamily="serif-monospace"
                         android:text="Name of Food"
                         android:textColor="@color/white"
                         android:textSize="20sp"
@@ -47,7 +47,8 @@
                         android:id="@+id/txt_food_price_inside_rv"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:fontFamily="serif-monospace"
+                        android:drawableLeft="@drawable/ic_rupee_indian"
+                        android:drawableTint="@color/white"
                         android:text="Price"
                         android:textColor="@color/white"
                         android:textSize="20sp"
@@ -56,10 +57,9 @@
                 <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="70dp"
+                        android:layout_marginLeft="95dp"
                         android:layout_marginTop="-25dp"
-                        android:fontFamily="serif-monospace"
-                        android:text="Offer Price: "
+                        android:text="Offer: "
                         android:textColor="@color/white"
                         android:textSize="20sp"
                         android:textStyle="bold" />
@@ -68,10 +68,11 @@
                         android:id="@+id/txt_food_offer_price_inside_rv"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="225dp"
+                        android:layout_marginLeft="150dp"
                         android:layout_marginTop="-25dp"
-                        android:fontFamily="serif-monospace"
-                        android:text="OPrice"
+                        android:drawableLeft="@drawable/ic_rupee_indian"
+                        android:drawableTint="@color/white"
+                        android:text="OP"
                         android:textColor="@color/white"
                         android:textSize="20sp"
                         android:textStyle="bold" />
@@ -79,27 +80,26 @@
             </LinearLayout>
 
             <LinearLayout
-                    android:layout_width="0dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="2"
                     android:gravity="center_vertical"
                     android:orientation="horizontal"
+                    android:layout_marginRight="-60dp"
                     android:weightSum="2">
 
-                <ImageView
-                        android:id="@+id/image_view_add_to_fav_inside_rv"
-                        android:layout_width="0dp"
-                        android:layout_height="40dp"
-                        android:layout_weight="1"
-                        android:src="@drawable/ic_favourites"
-                        android:tint="@color/white" />
+                <CheckBox
+                        android:id="@+id/favorites_add_to_fav"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:background="@drawable/toggle_selector"
+                        android:button="@null"
+                        android:visibility="visible"
+                        />
 
                 <ImageView
                         android:id="@+id/image_view_add_to_cart_inside_rv"
-                        android:layout_width="0dp"
+                        android:layout_width="40dp"
                         android:layout_height="40dp"
-                        android:layout_marginLeft="5dp"
-                        android:layout_weight="1"
                         android:src="@drawable/ic_mycart"
                         android:tint="@color/white" />
 

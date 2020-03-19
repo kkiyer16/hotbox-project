@@ -44,7 +44,6 @@ import java.io.File
 import java.lang.Exception
 import kotlin.collections.HashMap
 
-
 @Suppress("DEPRECATION", "RECEIVER_NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS",
     "NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS"
 )
@@ -61,6 +60,7 @@ class ProfileActivity : AppCompatActivity() {
     lateinit var imgPath : UploadTask
     lateinit var imgData : ByteArray
     private val userid = FirebaseAuth.getInstance().currentUser?.uid.toString()
+    private val currentUser = FirebaseAuth.getInstance().currentUser
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -79,6 +79,24 @@ class ProfileActivity : AppCompatActivity() {
 
         val fName = findViewById<TextView>(R.id.name_of_user_tv)
 
+        currentUser.let {
+            if (it!!.isEmailVerified){
+                email_id_not_verified.visibility = View.INVISIBLE
+            }
+            else{
+                email_id_not_verified.visibility = View.VISIBLE
+            }
+        }
+
+        email_id_not_verified.setOnClickListener {
+            currentUser!!.sendEmailVerification().addOnCompleteListener {
+                if (it.isSuccessful){
+                    Toast.makeText(this, "Verification Email Sent", Toast.LENGTH_LONG).show()
+                }else{
+                    Toast.makeText(this, it.exception!!.message, Toast.LENGTH_LONG).show()
+                }
+            }
+        }
 
         fStore.collection("HotBox")
             .document(userid)
@@ -86,7 +104,9 @@ class ProfileActivity : AppCompatActivity() {
             .get().addOnSuccessListener { ds->
                 val username = ds.getString("FullName")
                 val profile = ds.getString("url").toString()
+                val email_id = ds.getString("Email_ID").toString()
                 fName.text= username
+                email_of_user_tv.text = email_id
                 Glide.with(this).load(profile).placeholder(R.drawable.unisex_avatar).dontAnimate()
                     .fitCenter().into(user_profile_image)
         }
