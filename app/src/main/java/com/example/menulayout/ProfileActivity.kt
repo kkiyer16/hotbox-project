@@ -109,7 +109,7 @@ class ProfileActivity : AppCompatActivity() {
                 email_of_user_tv.text = email_id
                 Glide.with(this).load(profile).placeholder(R.drawable.unisex_avatar).dontAnimate()
                     .fitCenter().into(user_profile_image)
-        }
+            }
 
         tv_share.setOnClickListener {
             val message = "Download the HotBox App from Playstore and Enjoy the tastes " +
@@ -136,7 +136,7 @@ class ProfileActivity : AppCompatActivity() {
         }
 
         user_profile_image.setOnClickListener {
-//            showFileChooser()
+            //            showFileChooser()
             val permission = ContextCompat.checkSelfPermission(this,
                 Manifest.permission.READ_EXTERNAL_STORAGE)
 
@@ -154,18 +154,18 @@ class ProfileActivity : AppCompatActivity() {
         }
 
         upload_profile_image.setOnClickListener {
-//            uploadFile()
-                if (selectedPhotoUri != null){
-                    val newFile = File(selectedPhotoUri!!.path)
-                    try {
-                        coms = Compressor(this).setMaxWidth(125)
-                            .setMaxHeight(125)
-                            .setQuality(50)
-                            .compressToBitmap(newFile)
-                    }catch(e : IOException){
-                        e.printStackTrace()
-                    }
-                    byteArrayOutputStream = ByteArrayOutputStream()
+            //            uploadFile()
+            if (selectedPhotoUri != null){
+                val newFile = File(selectedPhotoUri!!.path)
+                try {
+                    coms = Compressor(this).setMaxWidth(125)
+                        .setMaxHeight(125)
+                        .setQuality(50)
+                        .compressToBitmap(newFile)
+                }catch(e : IOException){
+                    e.printStackTrace()
+                }
+                byteArrayOutputStream = ByteArrayOutputStream()
                 coms?.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream)
                 imgData = byteArrayOutputStream.toByteArray()
                 imgPath = storageReference!!.child(FirebaseAuth.getInstance().uid.toString()).putBytes(imgData)

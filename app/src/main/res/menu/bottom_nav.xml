@@ -17,7 +17,7 @@
     />
     <item
             android:id="@+id/msg"
-            android:title="Messages"
+            android:title="Offer Messages"
             android:icon="@drawable/ic_messages"
     />
 </menu>

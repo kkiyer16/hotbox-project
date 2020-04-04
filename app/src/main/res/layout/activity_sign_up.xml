@@ -18,7 +18,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
-            android:layout_marginTop="280dp"
+            android:layout_marginTop="200dp"
             >
 
         <com.google.android.material.textfield.TextInputLayout
@@ -26,8 +26,7 @@
                 android:layout_height="wrap_content"
                 android:focusable="true"
                 android:textColorHint="@color/black"
-                android:focusableInTouchMode="true"
-        >
+                android:focusableInTouchMode="true" >
 
             <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/fullname"
@@ -67,6 +66,29 @@
                     android:background="@drawable/rounded_edittext"
             />
 
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:focusable="true"
+                android:textColorHint="@color/black"
+                android:focusableInTouchMode="true" >
+
+            <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/mobilenumber"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:padding="10dp"
+                    android:textColor="@color/black"
+                    android:hint="Mobile Number"
+                    android:inputType="phone"
+                    android:ems="10"
+                    android:gravity="center_horizontal"
+                    android:background="@drawable/rounded_edittext"
+
+                    />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout

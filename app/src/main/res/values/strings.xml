@@ -5,6 +5,16 @@
     <string name="feedback">Feedback</string>
     <string name="welcome_message">Welcome to HotBox!!!</string>
     <string name="welcome_message_1">We will rescue you from the aggression of hunger</string>
+    <string name="about_us_message">HotBox is a Food Ordering App in which we can order  Dabba\'s from home as well as from
+        catering services as well. Through this app you can order authentic foods through online and will be delivered to you
+        at mentioned time. This app was developed in the aspect of spreading helping hands to those users who cannot opt to carry
+        their foods from home so this will be made easier with our fellow app.
+        \n\n
+        For Any Assistance pls contact Admin!!!
+        \n\n
+        Thank You!!!
+
+    </string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>

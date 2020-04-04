@@ -1,6 +1,5 @@
 package com.example.menulayout
 
-import android.graphics.ColorSpace
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -12,9 +11,9 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.google.common.base.CaseFormat
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
+import java.lang.StringBuilder
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -50,7 +49,22 @@ class SearchFragment : Fragment() {
                     mArrayList.clear()
                 }
                 else {
-                    searchFoodBreakfast(p0!!)
+                    //searchFoodBreakfast(p0!!.substring(0, 1).toUpperCase(Locale.ROOT) + p0.substring(1))
+                    searchFoodBreakfast(p0!!.split(' ').joinToString(" ") { it.capitalize()  })
+                    /*val x = p0!!
+                    val y = x.toCharArray()
+                    val sizee = y.size
+                    y[0] = (y[0] - 32).toChar()
+                    var i = 1
+                    while (i != sizee){
+                        if (y[i] == ' '){
+                            y[i+1] = (y[i+1] - 32).toChar()
+                        }
+                        ++i
+                    }
+                    Log.d("x",x)
+                    Log.d("y",y.toString().trim())
+                    searchFoodBreakfast(y.toString())*/
                 }
                 return true
             }
@@ -181,3 +195,27 @@ class SearchFragment : Fragment() {
         (activity as AppCompatActivity).supportActionBar?.show()
     }
 }
+
+
+//class hw{
+//    fun convert(str: String): String {
+//        val s = StringBuffer()
+//        var ch = ' '
+//        for (i in 0 until str.length) {
+//            if (ch == ' ' && str[i] != ' ') {
+//                s.append(Character.toUpperCase(str[i]))
+//            } else {
+//                s.append(str[i])
+//            }
+//            ch = str[i]
+//        }
+//        return s.toString().trim { it <= ' ' }
+//    }
+//
+//    @JvmStatic
+//    fun main(args: Array<String>) {
+//        var s = "vada sambar"
+//        s = s.toLowerCase()
+//        println(convert(s))
+//    }
+//}

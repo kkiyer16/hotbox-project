@@ -8,10 +8,16 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
+import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
 
 class MyOrdersAdapter(var con: Context, var list: ArrayList<ModelOrders>) :
     RecyclerView.Adapter<myOrdersViewHolder>() {
+
+    private val fStore = FirebaseFirestore.getInstance()
+    private val userid = FirebaseAuth.getInstance().currentUser?.uid.toString()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): myOrdersViewHolder {
         val layoutInflater : LayoutInflater = LayoutInflater.from(con)
@@ -42,12 +48,43 @@ class MyOrdersAdapter(var con: Context, var list: ArrayList<ModelOrders>) :
             holder.ord_road.text = orderItem.road
             holder.ord_state.text = orderItem.state
             holder.ord_tot_price.text = orderItem.totalprice
+            holder.status.text = orderItem.statusoforder
 
-//            holder.ord_show_btn.setOnClickListener {
-//                val intent = Intent(con, ViewFoodsOfOrderActivity::class.java)
-//                intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
-//                con.startActivity(intent)
-//            }
+            holder.cancel_my_order.setOnClickListener {
+                if(holder.status.text == "Left For Delivery" || holder.status.text == "Order Delivered"){
+                    Toast.makeText(con, "You cannot cancel a Order!!!", Toast.LENGTH_LONG).show()
+                    holder.cancel_my_order.visibility = View.GONE
+                }
+                else if(holder.status.text == "Order Delivered"){
+                    holder.cancel_my_order.visibility = View.GONE
+                }
+                else {
+                    val cancelStatus = HashMap<String, Any>()
+                    cancelStatus["statusoforder"] = "Order Cancelled"
+
+                    fStore.collection("Orders").document(userid).collection("CateringOrder").get()
+                        .addOnSuccessListener { data ->
+                            for (ds in data.documents) {
+                                fStore.collection("Orders").document(userid)
+                                    .collection("CateringOrder").document(ds.id.toString())
+                                    .update(cancelStatus)
+                                    .addOnCompleteListener {
+                                        if (it.isSuccessful){
+                                            fStore.collection("HotBox").document(userid).collection("CateringOrder")
+                                                .document(ds.id.toString())
+                                                .update(cancelStatus)
+                                                .addOnCompleteListener {
+                                                    if (it.isSuccessful){
+                                                        Toast.makeText(con, "Order Cancelled", Toast.LENGTH_LONG).show()
+                                                        holder.cancel_my_order.visibility = View.GONE
+                                                    }
+                                                }
+                                        }
+                                    }
+                            }
+                        }
+                }
+            }
 
         }catch (e: Exception){
             e.printStackTrace()
@@ -68,4 +105,6 @@ class myOrdersViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
     val ord_state = itemView.findViewById<TextView>(R.id.order_tv_state)
     val ord_tot_price = itemView.findViewById<TextView>(R.id.order_tv_total_amt)
     //val ord_show_btn = itemView.findViewById<Button>(R.id.show_this_order_foods)
+    val cancel_my_order = itemView.findViewById<TextView>(R.id.cancel_my_order)
+    val status = itemView.findViewById<TextView>(R.id.my_orders_tv_status)
 }

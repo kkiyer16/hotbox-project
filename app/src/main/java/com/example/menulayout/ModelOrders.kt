@@ -11,7 +11,9 @@ class ModelOrders(
     var pin : String,
     var road : String,
     var state : String,
-    var totalprice : String
+    var totalprice : String,
+    var uid : String,
+    var statusoforder : String
 )
 {
     //Class def

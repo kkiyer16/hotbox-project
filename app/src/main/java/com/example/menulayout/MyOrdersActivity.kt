@@ -1,5 +1,6 @@
 package com.example.menulayout
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -10,6 +11,7 @@ import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.DocumentChange
 import com.google.firebase.firestore.FirebaseFirestore
+import kotlinx.android.synthetic.main.activity_my_orders.*
 import java.lang.Exception
 
 class MyOrdersActivity : AppCompatActivity() {
@@ -28,7 +30,11 @@ class MyOrdersActivity : AppCompatActivity() {
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
 
-        val retData = fStore.collection("HotBox").document("Orders").collection(userid)
+        view_my_orders_my_home_orders.setOnClickListener {
+            startActivity(Intent(this, MyHomeOrdersActivity::class.java))
+        }
+
+        val retData = fStore.collection("HotBox").document(userid).collection("CateringOrders")
         retData.addSnapshotListener { snap, excep ->
             if (snap != null){
                 for (i in snap.documentChanges){
@@ -46,7 +52,9 @@ class MyOrdersActivity : AppCompatActivity() {
                                     i.document.getString("pin")!!,
                                     i.document.getString("road")!!,
                                     i.document.getString("state")!!,
-                                    i.document.getString("totalprice")!!
+                                    i.document.getString("totalprice")!!,
+                                    i.document.getString("uid")!!,
+                                    i.document.getString("statusoforder")!!
                                 )
                                 types.set(i.document.id)
                                 mArrayList.add(types)

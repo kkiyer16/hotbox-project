@@ -17,10 +17,7 @@ import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.firestore.DocumentChange
-import com.google.firebase.firestore.DocumentSnapshot
-import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.SetOptions
+import com.google.firebase.firestore.*
 import kotlinx.android.synthetic.main.activity_check_out.*
 import kotlinx.android.synthetic.main.activity_home_food.*
 import java.io.Serializable
@@ -145,22 +142,48 @@ class CheckOutActivity : AppCompatActivity(), Serializable {
             cnfmData["totalprice"] = tot
             cnfmData["deliverytime"] = deltime
             cnfmData["ordered_at"] = orderedat
-
+            
             confirm_order_progress_bar.visibility = View.VISIBLE
 
-            val ref1 = fStore.collection("HotBox Admin").document("Orders").collection(userid)
+            val ref1 = fStore.collection("Orders").document(userid).collection("CateringOrders")
             ref1.get().addOnSuccessListener {
                 if (!it.isEmpty) {
                     Toast.makeText(this, "Please wait for your previous order to deliver", Toast.LENGTH_LONG).show()
                     startActivity(Intent(this, MainActivity::class.java))
                 }
                 else {
-                    val ref = fStore.collection("HotBox").document("Orders").collection(userid).document(uuid)
+                    val ref = fStore.collection("HotBox").document(userid)
+                        .collection("CateringOrders").document(uuid)
                     ref.set(cnfmData, SetOptions.merge())
                         .addOnCompleteListener {
                             if (it.isSuccessful) {
-                                fStore.collection("HotBox Admin").document("Orders")
-                                    .collection(userid)
+                                fStore.collection("Orders").document("AllOrders").get()
+                                    .addOnSuccessListener { data ->
+                                        if (data.exists()) {
+                                            fStore.collection("Orders").document("AllOrders")
+                                                .update(
+                                                    "TotalList",
+                                                    FieldValue.arrayUnion(userid)
+                                                ).addOnSuccessListener {
+                                                    Log.d("ffd", userid.toString())
+                                                }
+
+                                        } else {
+                                            fStore.collection("Orders").document("AllOrders")
+                                                .set(
+                                                    hashMapOf(
+                                                        "TotalList" to arrayListOf(userid.toString())
+                                                    )
+                                                ).addOnSuccessListener {
+                                                    Log.d("ffd", userid.toString())
+                                                }
+
+                                        }
+
+                                    }
+
+
+                                fStore.collection("Orders").document(userid).collection("CateringOrders")
                                     .document(uuid)
                                     .set(cnfmData, SetOptions.merge())
                                     .addOnCompleteListener { tk ->

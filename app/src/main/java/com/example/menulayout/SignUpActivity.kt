@@ -12,6 +12,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.DocumentReference
+import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.SetOptions
 import kotlinx.android.synthetic.main.activity_sign_up.*
@@ -23,6 +24,7 @@ class SignUpActivity : AppCompatActivity() {
     lateinit var fstore : FirebaseFirestore
     lateinit var authen : FirebaseAuth
     lateinit var docRef : DocumentReference
+    private val fStore = FirebaseFirestore.getInstance()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -48,8 +50,9 @@ class SignUpActivity : AppCompatActivity() {
         val un = uname.text.toString()
         val em = emails.text.toString()
         val ps = pass.text.toString()
+        val mob = mobilenumber.text.toString()
 
-        if(fn.isEmpty() || un.isEmpty() || em.isEmpty() || ps.isEmpty()){
+        if(fn.isEmpty() || un.isEmpty() || em.isEmpty() || ps.isEmpty() || mob.isEmpty()){
             Toast.makeText(this, "Enter Required Credentials ", Toast.LENGTH_LONG ).show()
         }
 
@@ -78,6 +81,16 @@ class SignUpActivity : AppCompatActivity() {
             return
         }
 
+        if (TextUtils.isEmpty(mob)){
+            mobilenumber.error = "Mobile Number is Required"
+            return
+        }
+
+        if(mob.length > 10 || mob.length < 10){
+            mobilenumber.error = "Invalid Mobile Number Format"
+            return
+        }
+
         authen.createUserWithEmailAndPassword(em, ps)
             .addOnCompleteListener(this) {
                 if(it.isSuccessful){
@@ -85,10 +98,37 @@ class SignUpActivity : AppCompatActivity() {
                     usernew["FullName"] = fn
                     usernew["UserName"] = un
                     usernew["Email_ID"] = em
+                    usernew["mobilenumber"] = mob
 //                    usernew["Password"] = ps
                     docRef = fstore.collection("HotBox").document(FirebaseAuth.getInstance().uid.toString())
                         .collection("Users").document("Personal Details")
                     docRef.set(usernew, SetOptions.merge())
+                        .addOnCompleteListener {
+                            if (it.isSuccessful){
+                                fStore.collection("Users").document("AllUsers").get()
+                                    .addOnSuccessListener { data->
+                                        if (data.exists()){
+                                            fStore.collection("Users").document("AllUsers")
+                                                .update(
+                                                    "TotalList",
+                                                    FieldValue.arrayUnion(FirebaseAuth.getInstance().uid.toString())
+                                                ).addOnSuccessListener {
+                                                    Log.d("ffd", FirebaseAuth.getInstance().uid.toString())
+                                                }
+                                        }
+                                        else{
+                                            fStore.collection("Users").document("AllUsers")
+                                                .set(
+                                                    hashMapOf(
+                                                        "TotalList" to arrayListOf(FirebaseAuth.getInstance().uid.toString())
+                                                    )
+                                                ).addOnSuccessListener {
+                                                    Log.d("ffd", FirebaseAuth.getInstance().uid.toString())
+                                                }
+                                        }
+                                    }
+                            }
+                        }
                         .addOnSuccessListener {
                             Toast.makeText(this, "Registered Successfully to HotBox!!", Toast.LENGTH_LONG).show()
                             Toast.makeText(this, "Welcome to HotBox!!", Toast.LENGTH_LONG).show()

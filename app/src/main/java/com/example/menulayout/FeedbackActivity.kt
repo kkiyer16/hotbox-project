@@ -58,12 +58,14 @@ class FeedbackActivity : AppCompatActivity() {
         val feed_email = feedback_email_id.text.toString().trim()
         val feed_message = feedback_message.text.toString().trim()
         val feed_rating = feedback_rating.rating.toString()
+        val feed_mob = feedback_mobile_no.text.toString().trim()
 
         if(TextUtils.isEmpty(feed_name)){ feedback_user_name.error = "Should not be Empty"}
         if(TextUtils.isEmpty(feed_email)){ feedback_email_id.error = "Should not be Empty"}
         if(TextUtils.isEmpty(feed_message)){ feedback_message.error = "Should not be Empty"}
+        if(TextUtils.isEmpty(feed_mob)){ feedback_mobile_no.error = "Should not be Empty"}
 
-        if(feed_name.isEmpty() || feed_email.isEmpty() || feed_message.isEmpty()){
+        if(feed_name.isEmpty() || feed_email.isEmpty() || feed_message.isEmpty() || feed_mob.isEmpty()){
             Toast.makeText(this, "Enter Required Credentials", Toast.LENGTH_LONG).show()
         }else{
             try {
@@ -73,6 +75,7 @@ class FeedbackActivity : AppCompatActivity() {
                 feedData["emailid"] = feed_email
                 feedData["message"] = feed_message
                 feedData["rating"] = feed_rating
+                feedData["mobileno"] = feed_mob
 
                 val feedRef = fStore.collection("HotBox Admin").document("F0y2F2SeaoWHjY7sIHFr4JRf1HF2")
                     .collection("Feedback").document(userID)
@@ -80,6 +83,8 @@ class FeedbackActivity : AppCompatActivity() {
                     .addOnSuccessListener {
                         feedback_progress_bar.visibility = View.GONE
                         Toast.makeText(this, "Feedback Recorded Successfully", Toast.LENGTH_LONG).show()
+                        startActivity(Intent(this, MainActivity::class.java))
+                        finish()
                     }
                     .addOnFailureListener{e->
                         Toast.makeText(this, "Failed to Add", Toast.LENGTH_LONG).show()

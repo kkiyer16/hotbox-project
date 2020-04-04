@@ -29,7 +29,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     lateinit var homeFragment: HomeFragment
     lateinit var searchFragment: SearchFragment
-    lateinit var helpFragment: HelpFragment
     lateinit var notificationFragment: NotificationFragment
     lateinit var messageFragment: MessageFragment
     lateinit var authen : FirebaseAuth
@@ -123,14 +122,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             R.id.feedback -> {
                 startActivity(Intent(this,FeedbackActivity::class.java))
             }
-            R.id.help -> {
-                helpFragment = HelpFragment()
-                supportFragmentManager
-                    .beginTransaction()
-                    .replace(R.id.frame_layout, helpFragment)
-                    .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
-                    .addToBackStack(null)
-                    .commit()
+            R.id.aboutus -> {
+                startActivity(Intent(this,AboutUsActivity::class.java))
             }
             R.id.profile -> {
                 startActivity(Intent(this,ProfileActivity::class.java))
