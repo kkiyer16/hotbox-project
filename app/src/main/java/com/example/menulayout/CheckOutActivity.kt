@@ -41,6 +41,7 @@ class CheckOutActivity : AppCompatActivity(), Serializable {
     private lateinit var chk_total_price : TextView
     private val resultcode = 123
     private var dateTime = ""
+    private val adminID = "F0y2F2SeaoWHjY7sIHFr4JRf1HF2"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -114,8 +115,6 @@ class CheckOutActivity : AppCompatActivity(), Serializable {
     }
 
     private fun confirmOrder(){
-        val uuid = UUID.randomUUID().toString()
-
         val name = chk_name.text.toString().trim().trim()
         val home = chk_house.text.toString().trim()
         val road = chk_road.text.toString().trim()
@@ -125,6 +124,7 @@ class CheckOutActivity : AppCompatActivity(), Serializable {
         val landm = chk_landmark.text.toString().trim()
         val mob = chk_mob_no.text.toString().trim()
         val tot = chk_total_price.text.toString().trim()
+        val amt = chk_total_price.text.toString().toFloat().toString()
         val deltime = tv_delivery_time_check_out.text.toString().trim()
         val orderedat = dateTime
 
@@ -153,7 +153,9 @@ class CheckOutActivity : AppCompatActivity(), Serializable {
                 }
                 else {
                     val ref = fStore.collection("HotBox").document(userid)
-                        .collection("CateringOrders").document(uuid)
+                        .collection("CateringOrders")
+                        //.document(uuid)
+                        .document(dateTime)
                     ref.set(cnfmData, SetOptions.merge())
                         .addOnCompleteListener {
                             if (it.isSuccessful) {
@@ -182,17 +184,19 @@ class CheckOutActivity : AppCompatActivity(), Serializable {
 
                                     }
 
-
                                 fStore.collection("Orders").document(userid).collection("CateringOrders")
-                                    .document(uuid)
+                                    //.document(uuid)
+                                    .document(dateTime)
                                     .set(cnfmData, SetOptions.merge())
                                     .addOnCompleteListener { tk ->
                                         if (tk.isSuccessful) {
                                             confirm_order_progress_bar.visibility = View.INVISIBLE
-                                            Toast.makeText(this, "Order Placed Successfully", Toast.LENGTH_LONG).show()
-                                            Log.d("cnf", "Order Placed Successfully")
+                                            //Toast.makeText(this, "Order Placed Successfully", Toast.LENGTH_LONG).show()
+                                            //Log.d("cnf", "Order Placed Successfully")
                                             clearUserCartAfterConfirmOrder()
-                                            startActivity(Intent(this, MainActivity::class.java))
+                                            startActivity(Intent(this, PaymentActivity::class.java).apply {
+                                                putExtra("amt", amt)
+                                            })
                                             finish()
                                         }
                                     }
@@ -219,10 +223,10 @@ class CheckOutActivity : AppCompatActivity(), Serializable {
         Thread(
             Runnable {
                     var ref = fStore.collection("HotBox").document(userid)
-                        .collection("Cart List").addSnapshotListener { querySnapshot, firebaseFirestoreException ->
+                        .collection("CartList").addSnapshotListener { querySnapshot, firebaseFirestoreException ->
                             for(ds in querySnapshot!!.documents){
                                 fStore.collection("HotBox").document(userid)
-                                    .collection("Cart List").document(ds.id).delete().addOnSuccessListener {
+                                    .collection("CartList").document(ds.id).delete().addOnSuccessListener {
                                         Log.d("del",ds.id)
                                     }
                             }

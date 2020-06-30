@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.firestore.DocumentChange
 import com.google.firebase.firestore.FirebaseFirestore
+import kotlinx.android.synthetic.main.fragment_message.*
 
 class MessageFragment : Fragment() {
 
@@ -36,29 +37,37 @@ class MessageFragment : Fragment() {
         offersAdapter = OffersAdapter(activity!!.applicationContext, mArrayList)
         recylerView.adapter = offersAdapter
 
-        fStore.collection("HotBox Admin").document(adminID).collection("FoodOffers")
-            .addSnapshotListener { snap, e ->
-                if (snap!=null){
-                    for (i in snap.documentChanges){
-                        if (i.type == DocumentChange.Type.ADDED){
-                            if (i.document.exists()){
-                                try {
-                                    val types = ModelOffers(
-                                        i.document.getString("foodcategory")!!,
-                                        i.document.getString("foodname")!!,
-                                        i.document.getString("foodoffer")!!,
-                                        i.document.getString("foodprice")!!
-                                    )
-                                    mArrayList.add(types)
-                                }catch (e: Exception){
-                                    e.printStackTrace()
-                                    Log.d("e", e.message.toString().trim())
+        val ref = fStore.collection("HotBoxAdmin").document(adminID).collection("FoodOffers")
+
+        ref.get().addOnSuccessListener {
+            if (it.isEmpty){
+                no_offers_added_yet.visibility = View.VISIBLE
+            }
+            else{
+                ref.addSnapshotListener { snap, e ->
+                    if (snap!=null){
+                        for (i in snap.documentChanges){
+                            if (i.type == DocumentChange.Type.ADDED){
+                                if (i.document.exists()){
+                                    try {
+                                        val types = ModelOffers(
+                                            i.document.getString("foodcategory")!!,
+                                            i.document.getString("foodname")!!,
+                                            i.document.getString("foodoffer")!!,
+                                            i.document.getString("foodprice")!!
+                                        )
+                                        mArrayList.add(types)
+                                    }catch (e: Exception){
+                                        e.printStackTrace()
+                                        Log.d("e", e.message.toString().trim())
+                                    }
                                 }
                             }
                         }
+                        offersAdapter.update(mArrayList)
                     }
-                    offersAdapter.update(mArrayList)
                 }
             }
+        }
     }
 }

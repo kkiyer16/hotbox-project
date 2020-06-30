@@ -19,6 +19,7 @@ class MyHomeOrdersAdapter(var con: Context, var list: ArrayList<ModelHomeOrders>
 {
     private val fStore = FirebaseFirestore.getInstance()
     private val userid = FirebaseAuth.getInstance().currentUser?.uid.toString()
+    private val adminID = "F0y2F2SeaoWHjY7sIHFr4JRf1HF2"
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): homeOrdersViewHolder {
         val layoutInflater: LayoutInflater = LayoutInflater.from(con)
@@ -47,6 +48,7 @@ class MyHomeOrdersAdapter(var con: Context, var list: ArrayList<ModelHomeOrders>
             holder.pickupaddress.text = homeOrderItem.pickupaddress
             holder.status.text = homeOrderItem.statusoforder
             holder.subscription.text = homeOrderItem.subscription
+            holder.total_price.text = homeOrderItem.price
 
             holder.cancel_order.setOnClickListener {
                 if(holder.status.text == "Left For Delivery" || holder.status.text == "Order Delivered"){
@@ -54,6 +56,10 @@ class MyHomeOrdersAdapter(var con: Context, var list: ArrayList<ModelHomeOrders>
                     holder.cancel_order.visibility = View.GONE
                 }
                 else if(holder.status.text == "Order Delivered"){
+                    holder.cancel_order.visibility = View.GONE
+                }
+                else if(holder.status.text == "Order Cancelled"){
+                    Toast.makeText(con, "You cannot cancel a Order, its already cancelled!!!", Toast.LENGTH_LONG).show()
                     holder.cancel_order.visibility = View.GONE
                 }
                 else {
@@ -103,4 +109,5 @@ class homeOrdersViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
     val status = itemView.findViewById<TextView>(R.id.my_home_orders_tv_status)
     val card = itemView.findViewById<CardView>(R.id.my_home_orders_card)
     val cancel_order = itemView.findViewById<TextView>(R.id.cancel_my_home_order)
+    val total_price = itemView.findViewById<TextView>(R.id.my_home_orders_tv_total_price)
 }

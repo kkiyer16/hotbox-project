@@ -61,6 +61,7 @@ class ProfileActivity : AppCompatActivity() {
     lateinit var imgData : ByteArray
     private val userid = FirebaseAuth.getInstance().currentUser?.uid.toString()
     private val currentUser = FirebaseAuth.getInstance().currentUser
+    private val adminID = "F0y2F2SeaoWHjY7sIHFr4JRf1HF2"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -100,7 +101,7 @@ class ProfileActivity : AppCompatActivity() {
 
         fStore.collection("HotBox")
             .document(userid)
-            .collection("Users").document("Personal Details")
+            .collection("Users").document("PersonalDetails")
             .get().addOnSuccessListener { ds->
                 val username = ds.getString("FullName")
                 val profile = ds.getString("url").toString()
@@ -186,7 +187,7 @@ class ProfileActivity : AppCompatActivity() {
                 val userData = HashMap<String, Any>()
                 userData["url"] = uri.toString()
                 val ref = fStore.collection("HotBox").document(userid)
-                    .collection("Users").document("Personal Details")
+                    .collection("Users").document("PersonalDetails")
                 ref.update(userData)
                 Toast.makeText(this, "Uploaded Successfully to Database", Toast.LENGTH_LONG).show()
             }

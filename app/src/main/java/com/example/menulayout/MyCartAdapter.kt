@@ -21,6 +21,7 @@ class MyCartAdapter(var con: Context, var list: ArrayList<ModelCart>) :
 
     private val userid = FirebaseAuth.getInstance().currentUser!!.uid.toString()
     private var overAllTotalPrice : Int = 0
+    private val adminID = "F0y2F2SeaoWHjY7sIHFr4JRf1HF2"
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): myCartViewHolder {
         val layoutInflater : LayoutInflater = LayoutInflater.from(con)
@@ -44,8 +45,7 @@ class MyCartAdapter(var con: Context, var list: ArrayList<ModelCart>) :
             val a = cartItem.qtyoffood.toInt()
             val b = cartItem.priceoffood.toInt()
 
-            Glide.with(con).load(cartItem.imageoffood).centerCrop().dontAnimate()
-                .into(holder.cart_food_image)
+            Glide.with(con).load(cartItem.imageoffood).centerCrop().dontAnimate().into(holder.cart_food_image)
             holder.cart_food_name.text = cartItem.nameoffood
             holder.cart_food_qty.text = cartItem.qtyoffood
             holder.cart_food_price.text = cartItem.priceoffood
@@ -69,7 +69,7 @@ class MyCartAdapter(var con: Context, var list: ArrayList<ModelCart>) :
                 //For User View
                 FirebaseFirestore.getInstance().collection("HotBox")
                     .document(userid)
-                    .collection("Cart List")
+                    .collection("CartList")
                     .document(cartItem.foodid)
                     .delete()
                     .addOnSuccessListener {
@@ -81,9 +81,9 @@ class MyCartAdapter(var con: Context, var list: ArrayList<ModelCart>) :
                         Toast.makeText(con, "Failed to Remove", Toast.LENGTH_LONG).show()
                     }
                 //For Admin View
-                FirebaseFirestore.getInstance().collection("HotBox Admin")
+                FirebaseFirestore.getInstance().collection("HotBoxAdmin")
                     //.document("F0y2F2SeaoWHjY7sIHFr4JRf1HF2")
-                    .document("Cart List")
+                    .document("CartList")
                     .collection(userid)
                     .document(cartItem.foodid)
                     .delete()

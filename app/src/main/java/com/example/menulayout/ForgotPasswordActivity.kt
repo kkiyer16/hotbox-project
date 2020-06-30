@@ -11,6 +11,8 @@ import kotlinx.android.synthetic.main.activity_forgot_password.*
 
 class ForgotPasswordActivity : AppCompatActivity() {
 
+    private val adminID = "F0y2F2SeaoWHjY7sIHFr4JRf1HF2"
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_forgot_password)

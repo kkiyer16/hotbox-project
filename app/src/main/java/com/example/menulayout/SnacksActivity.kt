@@ -14,6 +14,7 @@ class SnacksActivity : AppCompatActivity() {
     lateinit var recylerView: RecyclerView
     lateinit var foodAdapter: FoodAdapter
     private val mArrayList: ArrayList<ModelFood> = ArrayList()
+    private val adminID = "F0y2F2SeaoWHjY7sIHFr4JRf1HF2"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -25,8 +26,7 @@ class SnacksActivity : AppCompatActivity() {
         actionBar.setDisplayHomeAsUpEnabled(true)
         actionBar.setDisplayHomeAsUpEnabled(true)
 
-        val retData = fStore.collection("HotBox Admin").document("F0y2F2SeaoWHjY7sIHFr4JRf1HF2")
-            .collection("Snacks")
+        val retData = fStore.collection("HotBoxAdmin").document(adminID).collection("Snacks")
         retData.addSnapshotListener { snap, e ->
             if (snap != null) {
                 for (i in snap.documentChanges) {

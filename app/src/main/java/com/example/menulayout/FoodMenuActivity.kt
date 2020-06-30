@@ -10,6 +10,8 @@ import kotlinx.android.synthetic.main.activity_food_menu.*
 
 class FoodMenuActivity : AppCompatActivity() {
 
+    private val adminID = "F0y2F2SeaoWHjY7sIHFr4JRf1HF2"
+
     @SuppressLint("ResourceAsColor")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

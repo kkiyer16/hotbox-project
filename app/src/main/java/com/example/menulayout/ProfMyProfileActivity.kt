@@ -21,6 +21,7 @@ class ProfMyProfileActivity : AppCompatActivity() {
     lateinit var fStore : FirebaseFirestore
     lateinit var fAuth : FirebaseAuth
     private val userid = FirebaseAuth.getInstance().currentUser?.uid.toString()
+    private val adminID = "F0y2F2SeaoWHjY7sIHFr4JRf1HF2"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -57,25 +58,31 @@ class ProfMyProfileActivity : AppCompatActivity() {
         val namepro = findViewById<EditText>(R.id.edit_profile_name)
         val usernamepro = findViewById<EditText>(R.id.edit_profile_username)
         val dobpro = findViewById<EditText>(R.id.edit_profile_dob)
+        val mobnopro = findViewById<EditText>(R.id.edit_profile_mobile_number)
 
-        val np = namepro.text.toString()
-        val up = usernamepro.text.toString()
-        val dobp = dobpro.text.toString()
+        val np = namepro.text.toString().trim()
+        val up = usernamepro.text.toString().trim()
+        val dobp = dobpro.text.toString().trim()
+        val mp = mobnopro.text.toString().trim()
 
         if(TextUtils.isEmpty(np)){ namepro.error = "Should not be Empty"}
         if(TextUtils.isEmpty(up)){ usernamepro.error = "Should not be Empty"}
         if(TextUtils.isEmpty(dobp)){ dobpro.error = "Should not be Empty"}
+        if (TextUtils.isEmpty(mp)){ mobnopro.error = "Should not be Empty" }
+        if (mp.length > 10 || mp.length < 10){
+            mobnopro.error = "Invalid Mobile Number Format"
+        }
 
-        if (np.isEmpty() || up.isEmpty() || dobp.isEmpty()){
+        if (np.isEmpty() || up.isEmpty() || dobp.isEmpty() || mp.isEmpty()){
             Toast.makeText(this, "Enter Required Credentials", Toast.LENGTH_LONG).show()
         }
         else{
                 try {
-                    val docRef = fStore.collection("HotBox")
-                        .document(userid)
-                        .collection("Users").document("Personal Details")
+                    val docRef = fStore.collection("HotBox").document(userid)
+                        .collection("Users").document("PersonalDetails")
                     docRef.update("FullName", np)
                     docRef.update("UserName", up)
+                    docRef.update("mobilenumber", mp)
                     add_dob_to_database()
                     Toast.makeText(this, "Data Updated Successfully", Toast.LENGTH_LONG).show()
 
@@ -100,7 +107,7 @@ class ProfMyProfileActivity : AppCompatActivity() {
 
             val docRef = fStore.collection("HotBox")
                 .document(userid)
-                .collection("Users").document("Personal Details")
+                .collection("Users").document("PersonalDetails")
             docRef.set(userData, SetOptions.merge())
                 .addOnSuccessListener {
                     Toast.makeText(this, "DOB Added Successfully", Toast.LENGTH_LONG).show()

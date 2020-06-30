@@ -12,6 +12,8 @@ import androidx.recyclerview.widget.RecyclerView
 class OffersAdapter(var con : Context, var list : ArrayList<ModelOffers>) :
     RecyclerView.Adapter<offersViewHolder>()
 {
+    private val adminID = "F0y2F2SeaoWHjY7sIHFr4JRf1HF2"
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): offersViewHolder {
         return offersViewHolder(LayoutInflater.from(con).inflate(R.layout.rv_offers_items, parent, false))
     }

@@ -24,6 +24,7 @@ class ProfMyAddressActivity : AppCompatActivity() {
     lateinit var fAuth : FirebaseAuth
     lateinit var fStore : FirebaseFirestore
     private val userid = FirebaseAuth.getInstance().currentUser?.uid.toString()
+    private val adminID = "F0y2F2SeaoWHjY7sIHFr4JRf1HF2"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -107,7 +108,7 @@ class ProfMyAddressActivity : AppCompatActivity() {
                 }
                 val uuid = UUID.randomUUID().toString()
                 val ref = fStore.collection("HotBox").document(userid)
-                    .collection("Users Address").document(uuid)
+                    .collection("UsersAddress").document(uuid)
                 ref.set(userData, SetOptions.merge())
                     .addOnSuccessListener {
                         Toast.makeText(this, "Address Added Successfully", Toast.LENGTH_LONG).show()

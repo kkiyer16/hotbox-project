@@ -19,9 +19,12 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
 import androidx.fragment.app.FragmentTransaction
+import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.navigation.NavigationView
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.iid.FirebaseInstanceId
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.app_bar_main.*
 
@@ -32,6 +35,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     lateinit var notificationFragment: NotificationFragment
     lateinit var messageFragment: MessageFragment
     lateinit var authen : FirebaseAuth
+    lateinit var firestore:FirebaseFirestore
+    private val adminID = "F0y2F2SeaoWHjY7sIHFr4JRf1HF2"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -50,6 +55,15 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         drawerToggle.syncState()
 
         nav_view.setNavigationItemSelectedListener(this)
+
+        firestore= FirebaseFirestore.getInstance()
+        FirebaseInstanceId.getInstance().instanceId.addOnSuccessListener {
+            firestore.collection("HotBox")
+                .document(FirebaseAuth.getInstance().currentUser?.uid.toString())
+                .collection("Users")
+                .document("PersonalDetails")
+                .update("token",it.token.toString())
+        }
 
         homeFragment = HomeFragment()
         supportFragmentManager

@@ -16,6 +16,7 @@ class MyHomeOrdersActivity : AppCompatActivity() {
     private val mArrayList: ArrayList<ModelHomeOrders> = ArrayList()
     lateinit var fStore: FirebaseFirestore
     private val userid = FirebaseAuth.getInstance().currentUser?.uid.toString()
+    private val adminID = "F0y2F2SeaoWHjY7sIHFr4JRf1HF2"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,6 +31,8 @@ class MyHomeOrdersActivity : AppCompatActivity() {
         recyclerView.setHasFixedSize(true)
         val layoutManager = LinearLayoutManager(this)
         recyclerView.layoutManager = layoutManager
+        layoutManager.reverseLayout = true
+        layoutManager.stackFromEnd = true
         myHomeOrdersAdapter = MyHomeOrdersAdapter(applicationContext, mArrayList, this)
         recyclerView.adapter = myHomeOrdersAdapter
 
@@ -49,7 +52,8 @@ class MyHomeOrdersActivity : AppCompatActivity() {
                                     i.document.getString("pickupaddress")!!,
                                     i.document.getString("subscription")!!,
                                     i.document.getString("statusoforder")!!,
-                                    i.document.getString("uid")!!
+                                    i.document.getString("uid")!!,
+                                    i.document.getString("price")!!
                                 )
                                 types.set(i.document.id)
                                 mArrayList.add(types)

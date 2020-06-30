@@ -26,6 +26,7 @@ class FoodAdapter(var con: Context, var list: ArrayList<ModelFood>) :
     RecyclerView.Adapter<viewHolder>() {
 
     private val userid = FirebaseAuth.getInstance().currentUser!!.uid.toString()
+    private val adminID = "F0y2F2SeaoWHjY7sIHFr4JRf1HF2"
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): viewHolder {
         val layoutInflater : LayoutInflater = LayoutInflater.from(con)

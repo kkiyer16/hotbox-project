@@ -116,6 +116,7 @@
                     android:inputType="phone"
                     android:paddingLeft="10dp"
                     android:textColor="@color/black"
+                    android:maxLength="10"
                     android:textSize="20sp" />
 
         </com.google.android.material.textfield.TextInputLayout>
@@ -173,6 +174,41 @@
                 android:layout_marginRight="5dp"
                 android:contentDescription="@null"
                 android:src="@drawable/ic_spinner_custom" />
+
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Price:"
+                    android:textColor="@color/black"
+                    android:textSize="22sp"
+                    android:textStyle="bold"
+                    android:layout_marginTop="15dp"
+                    />
+
+            <ImageView
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:src="@drawable/ic_rupee_indian"
+                    android:layout_marginTop="17dp"
+                    android:layout_marginLeft="5dp"
+                    />
+
+            <TextView
+                    android:id="@+id/act_home_food_total_price"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="price"
+                    android:textColor="@color/black"
+                    android:textSize="22sp"
+                    android:layout_marginTop="15dp"
+                    />
+
+        </LinearLayout>
 
         <ProgressBar
                 android:id="@+id/progress_bar_order_home_dabba"

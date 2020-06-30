@@ -65,6 +65,31 @@
 
             </com.google.android.material.textfield.TextInputLayout>
 
+            <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:focusable="true"
+                    android:layout_marginTop="10dp"
+                    android:focusableInTouchMode="true"
+                    android:textColorHint="#A3A3A3" >
+
+                <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/edit_profile_mobile_number"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Mobile Number*"
+                        android:drawableLeft="@drawable/ic_phone"
+                        android:drawableTint="@color/colorPrimary"
+                        android:drawablePadding="15dp"
+                        android:inputType="phone"
+                        android:maxLength="10"
+                        android:textSize="20sp"
+                        android:paddingLeft="10dp"
+                        android:textColor="@color/black"
+                        />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
             <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent">

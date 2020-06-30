@@ -17,6 +17,7 @@ class BreakfastActivity : AppCompatActivity() {
     private val mArrayList: ArrayList<ModelFood> = ArrayList()
     lateinit var sh : SharedPreferences
     var mode = 0
+    private val adminID = "F0y2F2SeaoWHjY7sIHFr4JRf1HF2"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,7 +31,7 @@ class BreakfastActivity : AppCompatActivity() {
         actionBar.setDisplayHomeAsUpEnabled(true)
         actionBar.setDisplayHomeAsUpEnabled(true)
 
-        val retData = fStore.collection("HotBox Admin").document("F0y2F2SeaoWHjY7sIHFr4JRf1HF2")
+        val retData = fStore.collection("HotBoxAdmin").document(adminID)
             .collection("Breakfast")
         retData.addSnapshotListener { snap, e ->
             if (snap != null) {

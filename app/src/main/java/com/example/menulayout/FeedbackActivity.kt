@@ -27,6 +27,7 @@ class FeedbackActivity : AppCompatActivity() {
 
     private val userID = FirebaseAuth.getInstance().currentUser?.uid.toString()
     private val fStore = FirebaseFirestore.getInstance()
+    private val adminID = "F0y2F2SeaoWHjY7sIHFr4JRf1HF2"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -77,7 +78,7 @@ class FeedbackActivity : AppCompatActivity() {
                 feedData["rating"] = feed_rating
                 feedData["mobileno"] = feed_mob
 
-                val feedRef = fStore.collection("HotBox Admin").document("F0y2F2SeaoWHjY7sIHFr4JRf1HF2")
+                val feedRef = fStore.collection("HotBoxAdmin").document(adminID)
                     .collection("Feedback").document(userID)
                 feedRef.set(feedData, SetOptions.merge())
                     .addOnSuccessListener {

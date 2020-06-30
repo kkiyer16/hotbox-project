@@ -15,6 +15,7 @@ class FavoritesActivity : AppCompatActivity() {
     lateinit var foodAdapter: FoodAdapter
     private val mArrayList: ArrayList<ModelFood> = ArrayList()
     private val userid = FirebaseAuth.getInstance().currentUser!!.uid.toString()
+    private val adminID = "F0y2F2SeaoWHjY7sIHFr4JRf1HF2"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -26,7 +27,7 @@ class FavoritesActivity : AppCompatActivity() {
         actionBar.setDisplayHomeAsUpEnabled(true)
         actionBar.setDisplayHomeAsUpEnabled(true)
 
-        var ref=fStore.collection("HotBox Admin").document("F0y2F2SeaoWHjY7sIHFr4JRf1HF2")
+        var ref=fStore.collection("HotBoxAdmin").document(adminID)
         val retData = fStore.collection("HotBox").document(userid)
             .collection("Favorites")
         retData.get()

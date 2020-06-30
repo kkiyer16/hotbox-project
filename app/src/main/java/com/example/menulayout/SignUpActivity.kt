@@ -25,6 +25,7 @@ class SignUpActivity : AppCompatActivity() {
     lateinit var authen : FirebaseAuth
     lateinit var docRef : DocumentReference
     private val fStore = FirebaseFirestore.getInstance()
+    private val adminID = "F0y2F2SeaoWHjY7sIHFr4JRf1HF2"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -101,7 +102,7 @@ class SignUpActivity : AppCompatActivity() {
                     usernew["mobilenumber"] = mob
 //                    usernew["Password"] = ps
                     docRef = fstore.collection("HotBox").document(FirebaseAuth.getInstance().uid.toString())
-                        .collection("Users").document("Personal Details")
+                        .collection("Users").document("PersonalDetails")
                     docRef.set(usernew, SetOptions.merge())
                         .addOnCompleteListener {
                             if (it.isSuccessful){

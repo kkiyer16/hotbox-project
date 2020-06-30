@@ -17,6 +17,8 @@ import java.io.Serializable
 class AddressAdapter(var con: Context, var list: ArrayList<ModelAddress>, val form_other:String, var activity:AppCompatActivity) :
     RecyclerView.Adapter<AddressView>(), Serializable {
 
+    private val adminID = "F0y2F2SeaoWHjY7sIHFr4JRf1HF2"
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AddressView {
         val layoutInflater: LayoutInflater = LayoutInflater.from(con)
         val view: View = layoutInflater.inflate(R.layout.rv_address_items, parent, false)
@@ -49,9 +51,7 @@ class AddressAdapter(var con: Context, var list: ArrayList<ModelAddress>, val fo
             if(form_other=="checkout") {
                 try {
                     val intent = Intent()
-//                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                     intent.putExtra("address_object", addressItem)
-//                    con.startActivity(intent)
                     activity.setResult(Activity.RESULT_OK,intent)
                     activity.finish()
 
@@ -60,9 +60,7 @@ class AddressAdapter(var con: Context, var list: ArrayList<ModelAddress>, val fo
                 }
             }
         }
-
     }
-
 }
 
 class AddressView(itemView: View) : RecyclerView.ViewHolder(itemView) {

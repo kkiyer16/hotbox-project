@@ -21,6 +21,7 @@ class MyAddressActivity : AppCompatActivity() {
     lateinit var addressAdapter: AddressAdapter
     private val mArratList: ArrayList<ModelAddress> = ArrayList()
     private var from_other="self"
+    private val adminID = "F0y2F2SeaoWHjY7sIHFr4JRf1HF2"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -56,8 +57,7 @@ class MyAddressActivity : AppCompatActivity() {
 
     private fun reqNewData(){
         mArratList.clear()
-        val retData = fStore.collection("HotBox").document(userid)
-            .collection("Users Address")
+        val retData = fStore.collection("HotBox").document(userid).collection("UsersAddress")
         retData.get()
             .addOnSuccessListener {
                 for (i in it) {

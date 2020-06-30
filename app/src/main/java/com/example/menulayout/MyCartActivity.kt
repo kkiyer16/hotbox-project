@@ -21,7 +21,9 @@ import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.DocumentChange
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.android.synthetic.main.activity_my_cart.*
+import java.util.*
 import java.util.concurrent.Executor
+import kotlin.collections.ArrayList
 import kotlin.concurrent.thread
 
 class MyCartActivity : AppCompatActivity() {
@@ -32,6 +34,8 @@ class MyCartActivity : AppCompatActivity() {
     private val mArrayList: ArrayList<ModelCart> = ArrayList()
     private val userid = FirebaseAuth.getInstance().currentUser?.uid.toString()
     private var totalPrice = ""
+    private val adminID = "F0y2F2SeaoWHjY7sIHFr4JRf1HF2"
+    val listt = mArrayList
 
     val mMessageReceiver = object : BroadcastReceiver(){
         override fun onReceive(p0: Context?, p1: Intent?) {
@@ -54,7 +58,7 @@ class MyCartActivity : AppCompatActivity() {
         actionBar.setDisplayShowHomeEnabled(true)
 
         my_cart_checkout_button.setOnClickListener {
-            val ref = fStore.collection("HotBox").document(userid).collection("Cart List")
+            val ref = fStore.collection("HotBox").document(userid).collection("CartList")
             ref.get().addOnSuccessListener {
                 if (!it.isEmpty){
                     val i = Intent(this, CheckOutActivity::class.java)
@@ -68,7 +72,7 @@ class MyCartActivity : AppCompatActivity() {
             }
         }
 
-        val retData = fStore.collection("HotBox").document(userid).collection("Cart List")
+        val retData = fStore.collection("HotBox").document(userid).collection("CartList")
         retData.addSnapshotListener { snapshot, firestoreException ->
             if(snapshot != null){
                 for(i in snapshot.documentChanges) {
@@ -127,13 +131,13 @@ class MyCartActivity : AppCompatActivity() {
                 for (i in 0 until list.size) {
                     //user view
                     var ref = fStore.collection("HotBox").document(userid)
-                        .collection("Cart List").document(list[i].foodid).delete().addOnSuccessListener {
+                        .collection("CartList").document(list[i].foodid).delete().addOnSuccessListener {
                             Toast.makeText(applicationContext,"Cart Cleared",Toast.LENGTH_SHORT).show()
                             Log.d("del","$i deleted")
                         }
                     Thread.sleep(5000)
                     //admin view
-                    val ref1 = fStore.collection("HotBox Admin").document("Cart List")
+                    val ref1 = fStore.collection("HotBoxAdmin").document("CartList")
                         .collection(userid).document(list[i].foodid).delete().addOnSuccessListener {
                             Toast.makeText(applicationContext,"Admin Cart Cleared",Toast.LENGTH_SHORT).show()
                             Log.d("del","$i deleted")

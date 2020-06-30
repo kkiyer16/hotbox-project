@@ -21,6 +21,7 @@ class ProfChangePwd : AppCompatActivity() {
     lateinit var fStore : FirebaseFirestore
     private val userid = FirebaseAuth.getInstance().currentUser?.uid.toString()
     private val currentUser = FirebaseAuth.getInstance().currentUser
+    private val adminID = "F0y2F2SeaoWHjY7sIHFr4JRf1HF2"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

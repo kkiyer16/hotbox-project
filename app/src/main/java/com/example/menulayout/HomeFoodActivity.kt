@@ -27,6 +27,7 @@ class HomeFoodActivity : AppCompatActivity() {
     private var subs = arrayOfNulls<String>(5)
     private val fStore = FirebaseFirestore.getInstance()
     private val userid = FirebaseAuth.getInstance().currentUser?.uid.toString()
+    private val adminID = "F0y2F2SeaoWHjY7sIHFr4JRf1HF2"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -41,8 +42,8 @@ class HomeFoodActivity : AppCompatActivity() {
         subscription_category = findViewById(R.id.spinner_subscription)
         subs = resources.getStringArray(R.array.subs_categories)
 
-        val arr_adap = ArrayAdapter(this, android.R.layout.simple_spinner_item, subs)
-        arr_adap.setDropDownViewResource(android.R.layout.simple_spinner_item)
+        val arr_adap = ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, subs)
+        arr_adap.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         subscription_category.adapter = arr_adap
 
         subscription_category.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
@@ -51,6 +52,21 @@ class HomeFoodActivity : AppCompatActivity() {
             }
 
             override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
+                when (subscription_category.selectedItem) {
+                    "Only Today" -> {
+                        act_home_food_total_price.text = 50.toString()
+                        Log.d("price", act_home_food_total_price.text.toString())
+                    }
+                    "Weekly" -> {
+                        act_home_food_total_price.text = 350.toString()
+                    }
+                    "Monthly" -> {
+                        act_home_food_total_price.text = 1400.toString()
+                    }
+                    "Quarterly" -> {
+                        act_home_food_total_price.text = 4200.toString()
+                    }
+                }
             }
         }
 
@@ -71,7 +87,6 @@ class HomeFoodActivity : AppCompatActivity() {
     }
 
     private fun saveHomeDabbaOrderDetails(){
-        val uuid = UUID.randomUUID().toString()
         val name = et_name_order_dabba.text.toString().trim()
         val pick_up_add = et_pickup_add.text.toString().trim()
         val del_add = et_del_add.text.toString().trim()
@@ -80,25 +95,28 @@ class HomeFoodActivity : AppCompatActivity() {
         val sub_cat = subscription_category.selectedItem.toString().trim()
         val dateTime = SimpleDateFormat("MMM dd, yyyy HH:mm").format(Calendar.getInstance().time).toString().trim()
         Log.d("time", dateTime)
+        val price = act_home_food_total_price.text.toString().trim()
+        val amt = act_home_food_total_price.text.toString().toFloat().toString()
+        Log.d("amt", amt)
 
         if (name.isEmpty()){
             et_name_order_dabba.error = "Please Enter Name"
             et_name_order_dabba.requestFocus()
         }
         else if (pick_up_add.isEmpty()){
-            et_pickup_add.error = "Please Enter Name"
+            et_pickup_add.error = "Please Enter Pick up Address"
             et_pickup_add.requestFocus()
         }
         else if (del_add.isEmpty()){
-            et_del_add.error = "Please Enter Name"
+            et_del_add.error = "Please Enter Delivery Address"
             et_del_add.requestFocus()
         }
         else if (mob_no.isEmpty()){
-            et_mob_no_order_dabba.error = "Please Enter Name"
+            et_mob_no_order_dabba.error = "Please Enter Mobile Number"
             et_mob_no_order_dabba.requestFocus()
         }
         else if (del_time.isEmpty()){
-            tv_delivery_time.error = "Please Enter Name"
+            tv_delivery_time.error = "Please Enter Delivery Time"
             tv_delivery_time.requestFocus()
         }
         else if (sub_cat == "Select Subscription"){
@@ -115,6 +133,7 @@ class HomeFoodActivity : AppCompatActivity() {
                 foodDabba["deliverytime"] = del_time
                 foodDabba["subscription"] = sub_cat
                 foodDabba["uid"] = userid
+                foodDabba["price"] = price
 
                 progress_bar_order_home_dabba.visibility = View.VISIBLE
                 val ref = fStore.collection("Orders").document(userid).collection("HomeOrders")
@@ -125,7 +144,9 @@ class HomeFoodActivity : AppCompatActivity() {
                     }
                     else{
                         val ref1 = fStore.collection("HotBox").document(userid)
-                            .collection("HomeOrders").document(uuid)
+                            .collection("HomeOrders")
+                            //.document(uuid)
+                            .document(dateTime)
                         ref1.set(foodDabba, SetOptions.merge())
                             .addOnCompleteListener {
                                 if (it.isSuccessful){
@@ -149,19 +170,20 @@ class HomeFoodActivity : AppCompatActivity() {
                                                     ).addOnSuccessListener {
                                                         Log.d("ffd", userid.toString())
                                                     }
-
                                             }
-
                                         }
                                     fStore.collection("Orders").document(userid).collection("HomeOrders")
-                                        .document(uuid)
+                                        .document(dateTime)
                                         .set(foodDabba, SetOptions.merge())
                                         .addOnCompleteListener {tk->
                                             if (tk.isSuccessful){
                                                 progress_bar_order_home_dabba.visibility = View.INVISIBLE
-                                                Toast.makeText(this, "Order Placed Successfully", Toast.LENGTH_LONG).show()
-                                                Log.d("cnf", "Order Placed Successfully")
-                                                startActivity(Intent(this, MainActivity::class.java))
+                                                //Toast.makeText(this, "Order Placed Successfully", Toast.LENGTH_LONG).show()
+                                                //Log.d("cnf", "Order Placed Successfully")
+                                                startActivity(Intent(this, PaymentHomeActivity::class.java).apply {
+                                                    putExtra("homeprice", price)
+                                                    putExtra("amt", amt)
+                                                })
                                                 finish()
                                             }
                                         }

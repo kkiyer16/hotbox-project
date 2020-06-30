@@ -13,6 +13,9 @@ import com.google.firebase.firestore.DocumentChange
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.android.synthetic.main.activity_my_orders.*
 import java.lang.Exception
+import java.util.*
+import kotlin.Comparator
+import kotlin.collections.ArrayList
 
 class MyOrdersActivity : AppCompatActivity() {
 
@@ -21,6 +24,7 @@ class MyOrdersActivity : AppCompatActivity() {
     lateinit var ordersAdapter: MyOrdersAdapter
     private val mArrayList : ArrayList<ModelOrders> = ArrayList()
     private val userid = FirebaseAuth.getInstance().currentUser?.uid.toString()
+    private val adminID = "F0y2F2SeaoWHjY7sIHFr4JRf1HF2"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -73,12 +77,13 @@ class MyOrdersActivity : AppCompatActivity() {
         recylerView = findViewById(R.id.my_orders_recycler_view)
         recylerView.setHasFixedSize(true)
         val layoutManager = LinearLayoutManager(this)
+        layoutManager.reverseLayout = true
+        layoutManager.stackFromEnd = true
         recylerView.layoutManager = layoutManager
         ordersAdapter = MyOrdersAdapter(applicationContext, mArrayList)
         recylerView.adapter = ordersAdapter
+
     }
-
-
 
     override fun onSupportNavigateUp(): Boolean {
         onBackPressed()

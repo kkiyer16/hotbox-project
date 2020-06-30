@@ -9,7 +9,8 @@ class ModelHomeOrders(
     val pickupaddress : String,
     val subscription : String,
     val statusoforder : String,
-    val uid : String
+    val uid : String,
+    val price : String
 )
 {
     var homefoodid = ""

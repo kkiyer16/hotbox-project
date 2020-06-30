@@ -37,6 +37,7 @@ class ProductDetailsActivity : AppCompatActivity(), Serializable {
     private val userid = FirebaseAuth.getInstance().currentUser?.uid.toString()
     private val uuid = UUID.randomUUID().toString()
     private var fid : String? = null
+    private val adminID = "F0y2F2SeaoWHjY7sIHFr4JRf1HF2"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -99,13 +100,13 @@ class ProductDetailsActivity : AppCompatActivity(), Serializable {
             cartData["imageoffood"] = fd_img
             cartData["offeroffood"] = fd_offer
 
-            val ref = fStore.collection("HotBox").document(userid).collection("Cart List").document(fid!!)
+            val ref = fStore.collection("HotBox").document(userid).collection("CartList").document(fid!!)
             ref.set(cartData, SetOptions.merge())
                 .addOnCompleteListener { task ->
                     if (task.isSuccessful) {
-                        val mRef = fStore.collection("HotBox Admin")
+                        val mRef = fStore.collection("HotBoxAdmin")
                             //.document("F0y2F2SeaoWHjY7sIHFr4JRf1HF2")
-                            .document("Cart List")
+                            .document("CartList")
                             .collection(userid)
                             .document(fid!!)
                         mRef.set(cartData, SetOptions.merge())

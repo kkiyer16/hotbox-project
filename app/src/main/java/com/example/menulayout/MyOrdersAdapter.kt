@@ -18,6 +18,7 @@ class MyOrdersAdapter(var con: Context, var list: ArrayList<ModelOrders>) :
 
     private val fStore = FirebaseFirestore.getInstance()
     private val userid = FirebaseAuth.getInstance().currentUser?.uid.toString()
+    private val adminID = "F0y2F2SeaoWHjY7sIHFr4JRf1HF2"
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): myOrdersViewHolder {
         val layoutInflater : LayoutInflater = LayoutInflater.from(con)
@@ -51,26 +52,32 @@ class MyOrdersAdapter(var con: Context, var list: ArrayList<ModelOrders>) :
             holder.status.text = orderItem.statusoforder
 
             holder.cancel_my_order.setOnClickListener {
-                if(holder.status.text == "Left For Delivery" || holder.status.text == "Order Delivered"){
+                if(holder.status.text == "Left For Delivery"){
                     Toast.makeText(con, "You cannot cancel a Order!!!", Toast.LENGTH_LONG).show()
                     holder.cancel_my_order.visibility = View.GONE
                 }
                 else if(holder.status.text == "Order Delivered"){
+                    Toast.makeText(con, "You cannot cancel a Order!!!", Toast.LENGTH_LONG).show()
+                    holder.cancel_my_order.visibility = View.GONE
+                }
+                else if(holder.status.text == "Order Cancelled"){
+                    Toast.makeText(con, "You cannot cancel a Order, its already cancelled!!!", Toast.LENGTH_LONG).show()
                     holder.cancel_my_order.visibility = View.GONE
                 }
                 else {
                     val cancelStatus = HashMap<String, Any>()
                     cancelStatus["statusoforder"] = "Order Cancelled"
 
-                    fStore.collection("Orders").document(userid).collection("CateringOrder").get()
+                    fStore.collection("Orders").document(userid).collection("CateringOrders").get()
                         .addOnSuccessListener { data ->
                             for (ds in data.documents) {
                                 fStore.collection("Orders").document(userid)
-                                    .collection("CateringOrder").document(ds.id.toString())
+                                    .collection("CateringOrders").document(ds.id.toString())
                                     .update(cancelStatus)
                                     .addOnCompleteListener {
                                         if (it.isSuccessful){
-                                            fStore.collection("HotBox").document(userid).collection("CateringOrder")
+                                            fStore.collection("HotBox").document(userid)
+                                                .collection("CateringOrders")
                                                 .document(ds.id.toString())
                                                 .update(cancelStatus)
                                                 .addOnCompleteListener {
